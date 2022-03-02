@@ -1,0 +1,11 @@
+---
+# defaults file for install-certbot-cloudflaredns
+
+# Credentials have to be provided in an .ini file. See https://certbot-dns-cloudflare.readthedocs.io/en/stable/#credentials for reference.
+credentials: ~/cloudflare.ini
+
+# The domain you want to have a certificate for.
+domain: example.com
+
+# Email for address for ACME update
+email: coolguy@example.com

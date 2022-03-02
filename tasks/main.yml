@@ -1,0 +1,32 @@
+---
+# tasks file for install-certbot-cloudflaredns
+# Please refer to the certbot documentation https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal
+
+- name: remove certbot as apt package
+  apt:
+    name: certbot
+    state: absent
+
+- name: install required packages
+  apt:
+    name:
+      - snapd
+      - snap
+    update_cache: yes
+    state: present
+
+- name: install certbot as snap
+  snap:
+    classic: yes
+    name: certbot
+
+- name: set plugin policy
+  command: snap set certbot trust-plugin-with-root=ok
+
+- name: install cloudflare plugin
+  snap:
+    classic: yes
+    name: certbot-dns-cloudflare
+
+- name: start certbot
+  command: certbot certonly --dns-cloudflare  --dns-cloudflare-credentials {{ credentials }}  --dns-cloudflare-propagation-seconds 60 -d {{ domain }} -m {{ email }} --agree-tos -q
